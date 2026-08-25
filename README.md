@@ -18,6 +18,14 @@ This project is not an official YouTube or Google product and is not endorsed by
 >
 > **Caption-source notice:** If a video already supplies usable English and Simplified Chinese caption tracks, the extension can combine them directly; this is the most reliable path. If both tracks are not supplied, the extension can attempt local recognition and machine translation after the user enables “Local recognition.” This fallback does not guarantee that captions will appear or that recognition and translation will be accurate.
 
+## 演示 / Demo
+
+![YouTube 双字幕 2.0.0 在 Chrome 中同时显示中英字幕和双语文字记录](docs/images/demo.jpg)
+
+画面展示播放器内中英双字幕、双语文字记录、点击时间跳转、单句循环和自动暂停。视频画面与字幕仅用于扩展功能演示，相关内容归原权利人所有。
+
+The screenshot shows bilingual captions in the player, the bilingual transcript, timestamp seeking, sentence looping, and auto-pause. Video imagery and caption content are shown only to demonstrate the extension UI and remain the property of their respective owners.
+
 ## 功能范围 / Features
 
 - 中英双字幕：优先使用可用的原生字幕；必要时请求 YouTube 提供的简体中文翻译。

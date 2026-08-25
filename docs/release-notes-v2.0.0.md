@@ -2,6 +2,8 @@
 
 这是面向 macOS 与 Windows 桌面版 Chrome 的首个开源公开测试版。所有学习功能免费开放，无账号、付费、许可证、授权服务器或项目遥测。
 
+![YouTube 双字幕 2.0.0 演示](https://raw.githubusercontent.com/afdog/youtube-dual-subtitles/v2.0.0/docs/images/demo.jpg)
+
 ## 包含功能
 
 - 中英双字幕、单语回退和原生字幕保护
