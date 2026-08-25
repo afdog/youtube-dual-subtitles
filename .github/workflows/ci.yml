@@ -1,0 +1,70 @@
+name: Test and release
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "**"
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test and check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm test
+      - name: Run extension checks
+        run: npm run check
+      - name: Check packaging script syntax
+        run: node --check scripts/package-extension.mjs
+
+  release:
+    name: Package tagged release
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+      - name: Install npm dependencies
+        run: npm ci
+      - name: Read package version
+        id: package
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+      - name: Build release ZIP
+        run: npm run package
+      - name: Verify release ZIP
+        run: unzip -t "dist/youtube-dual-subtitles-v${{ steps.package.outputs.version }}.zip"
+      - name: Create GitHub Release and upload ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "dist/youtube-dual-subtitles-v${{ steps.package.outputs.version }}.zip" --clobber
+            gh release edit "$GITHUB_REF_NAME" --notes-file "docs/release-notes-${GITHUB_REF_NAME}.md"
+          else
+            gh release create "$GITHUB_REF_NAME" "dist/youtube-dual-subtitles-v${{ steps.package.outputs.version }}.zip" --title "YouTube Dual Subtitles $GITHUB_REF_NAME (Public Beta)" --notes-file "docs/release-notes-${GITHUB_REF_NAME}.md"
+          fi

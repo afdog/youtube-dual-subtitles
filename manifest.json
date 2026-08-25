@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube 双字幕",
+  "short_name": "双字幕",
+  "version": "2.0.0",
+  "description": "公开测试版：在支持的 YouTube 视频中显示中英双字幕，并提供文字记录、单句循环和自动暂停。",
+  "permissions": [
+    "storage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://huggingface.co/*",
+    "https://*.huggingface.co/*",
+    "https://*.hf.co/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "YouTube 双字幕",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/player-response-utils.js",
+        "content/player-bridge.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/local-whisper-utils.js",
+        "content/caption-utils.js",
+        "content/transcript-utils.js",
+        "content/content.js",
+        "content/learning-panel.js",
+        "content/local-whisper.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 双字幕</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="panel">
+      <header class="header">
+        <div class="brand-mark" aria-hidden="true"><span>幕</span></div>
+        <div class="brand-copy">
+          <h1>YouTube 双字幕</h1>
+          <p id="connection-status"><span class="status-dot"></span><span>正在连接</span></p>
+        </div>
+        <label class="switch primary-switch" title="启用双字幕">
+          <input id="enabled" data-setting="enabled" type="checkbox" aria-label="启用双字幕">
+          <span class="switch-track"></span>
+        </label>
+      </header>
+
+      <section class="settings-group" aria-labelledby="display-heading">
+        <h2 id="display-heading">字幕显示</h2>
+        <label class="setting-row">
+          <span><strong>中文字幕</strong><small>简体中文</small></span>
+          <span class="switch"><input id="showChinese" data-setting="showChinese" type="checkbox"><span class="switch-track"></span></span>
+        </label>
+        <label class="setting-row">
+          <span><strong>英文字幕</strong><small>English</small></span>
+          <span class="switch"><input id="showEnglish" data-setting="showEnglish" type="checkbox"><span class="switch-track"></span></span>
+        </label>
+      </section>
+
+      <section class="settings-group" aria-labelledby="style-heading">
+        <h2 id="style-heading">字幕样式</h2>
+        <div class="slider-setting">
+          <div class="setting-label"><span>字幕大小</span><output id="fontSize-output">34 px</output></div>
+          <input id="fontSize" data-setting="fontSize" type="range" min="18" max="52" step="1" aria-label="字幕大小">
+          <div class="range-labels"><span>小</span><span>大</span></div>
+        </div>
+        <div class="slider-setting compact-slider">
+          <div class="setting-label"><span>背景深度</span><output id="backgroundOpacity-output">68%</output></div>
+          <input id="backgroundOpacity" data-setting="backgroundOpacity" type="range" min="0" max="90" step="1" aria-label="背景深度">
+        </div>
+        <fieldset class="position-setting">
+          <legend>字幕位置</legend>
+          <div class="segmented-control">
+            <label><input type="radio" name="position" value="high"><span>偏高</span></label>
+            <label><input type="radio" name="position" value="bottom"><span>底部</span></label>
+            <label><input type="radio" name="position" value="low"><span>贴底</span></label>
+          </div>
+        </fieldset>
+        <label class="setting-row native-setting">
+          <span><strong>隐藏原生字幕</strong><small>仅在伴学字幕可用时</small></span>
+          <span class="switch"><input id="hideNative" data-setting="hideNative" type="checkbox"><span class="switch-track"></span></span>
+        </label>
+      </section>
+
+      <section class="settings-group" aria-labelledby="local-heading">
+        <h2 id="local-heading">本地识别（实验性）</h2>
+        <label class="setting-row">
+          <span><strong>无字幕时本地识别</strong><small>每台设备首次使用需下载模型</small></span>
+          <span class="switch"><input id="localRecognition" data-setting="localRecognition" type="checkbox"><span class="switch-track"></span></span>
+        </label>
+        <p class="local-note">音频在浏览器内处理，不上传到项目服务器；识别速度取决于设备。</p>
+      </section>
+
+      <section class="learning-section" aria-labelledby="learning-heading">
+        <div class="learning-heading-row">
+          <div><h2 id="learning-heading">学习工具</h2><p>文字记录、点击跳转、单句循环和自动暂停</p></div>
+        </div>
+        <button class="primary-button" id="open-panel" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14m0-14a6 6 0 0 0-6-2H3v14h3a6 6 0 0 1 6 2m0-14a6 6 0 0 1 6-2h3v14h-3a6 6 0 0 0-6 2"/></svg>
+          打开学习侧栏
+        </button>
+      </section>
+
+      <footer>
+        <span>仅在 YouTube 页面运行</span>
+        <span>字幕设置保存在本地</span>
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "youtube-dual-subtitles",
+  "version": "2.0.0",
+  "description": "A Chrome-only YouTube bilingual captions extension.",
+  "private": false,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build:ai": "node scripts/build-ai.mjs",
+    "check": "npm run build:ai && node scripts/check-extension.mjs",
+    "package": "npm run build:ai && node scripts/package-extension.mjs && npm run check:release",
+    "check:release": "node scripts/check-release.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@huggingface/transformers": "3.7.3",
+    "esbuild": "^0.28.2"
+  }
+}

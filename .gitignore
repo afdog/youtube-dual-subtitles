@@ -1,0 +1,13 @@
+node_modules/
+dist/
+background/service-worker.js
+background/ort-wasm-simd-threaded.mjs
+background/ort-wasm-simd-threaded.wasm
+offscreen/engine.js
+.package-staging/
+.env
+.env.*
+!.env.example
+*.log
+*.zip
+.DS_Store
