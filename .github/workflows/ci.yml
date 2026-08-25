@@ -53,7 +53,9 @@ jobs:
         run: npm ci
       - name: Read package version
         id: package
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+        run: |
+          package_version=$(node -p "require('./package.json').version")
+          echo "version=$package_version" >> "$GITHUB_OUTPUT"
       - name: Build release ZIP
         run: npm run package
       - name: Verify release ZIP
